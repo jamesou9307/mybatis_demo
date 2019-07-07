@@ -13,13 +13,24 @@
         <package name="com.james.mybatis.entity"/>
     </typeAliases>
 
-    <environments default="development">
+    <environments default="mybatis_demo">
 
         <environment id="development">
+            
             <transactionManager type="JDBC"></transactionManager>
             <dataSource type="UNPOOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
                 <property name="url" value="jdbc:mysql://localhost:3306/world"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+        
+        <environment id="mybatis_demo">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis_01"/>
                 <property name="username" value="root"/>
                 <property name="password" value="root"/>
             </dataSource>
