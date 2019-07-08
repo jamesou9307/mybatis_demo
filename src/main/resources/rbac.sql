@@ -2,7 +2,7 @@ create table sys_user(
 
 id bigint not null auto_increment primary key comment '用户ID',
 user_name varchar(50) comment '用户名',
-ussr_password varchar(50) comment '密码',
+user_password varchar(50) comment '密码',
 user_email varchar(50) comment '邮箱',
 user_info text comment '简介',
 head_img blob comment '头像',

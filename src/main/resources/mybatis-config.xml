@@ -40,6 +40,12 @@
 
     <mappers>
         <mapper resource="mapper/CityMapper.xml"></mapper>
+
+        <mapper resource="mapper/UserMapper.xml"></mapper>
+        <mapper resource="mapper/RoleMapper.xml"></mapper>
+        <!--<mapper resource="mapper/PrivilegeMapeer.xml"></mapper>
+        <mapper resource="mapper/UserRoleMapeer.xml"></mapper>
+        <mapper resource="mapper/RolePrivilegeMapeer.xml"></mapper>-->
     </mappers>
 
 </configuration>
