@@ -5,9 +5,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 
+
+
 import java.util.List;
 
-public class RoleMapperTest extends BaseMapperTest{
+public class RoleMapperTest extends BaseMapperTest {
 
     @Test
     public void testSelectAll(){

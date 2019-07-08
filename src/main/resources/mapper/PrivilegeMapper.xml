@@ -3,4 +3,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.james.mybatis.mapper.PrivilegeMapper">
 
+    <resultMap id="privilegeMap" type="com.james.mybatis.entity.SysPrivilege">
+        <id property="id" column="id"/>
+        <result property="privilegeName" column="privilege_name"/>
+        <result property="privilegeUrl" column="privilege_url"/>
+    </resultMap>
+
+    <select id="selectAll" resultMap="privilegeMap">
+        SELECT a.id,a.privilege_name,a.privilege_url FROM mybatis_01.sys_privilege a
+    </select>
+
 </mapper>

@@ -16,8 +16,9 @@ import java.io.Reader;
 import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 
-public class UserMapperTest extends BaseMapperTest{
-    private static SqlSessionFactory sqlSessionFactory;
+
+public class UserMapperTest extends BaseMapperTest {
+
 
 
 
