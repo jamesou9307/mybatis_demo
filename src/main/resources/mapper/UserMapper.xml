@@ -37,6 +37,35 @@
                 and a.id=#{id}
     </select>
 
+    <select id="selectRoleByUserIdAndEnabled" resultType="com.james.mybatis.entity.SysRole">
+        select
+        b.id,b.role_name,b.enabled,b.create_by,b.create_time
+        from sys_user a,sys_role b,sys_user_role c
+        where a.id=c.user_id
+        and b.id=c.role_id
+        and a.id=#{userId}  and b.enabled=#{enabled};
+    </select>
+
+    <!--动态sql语句，根据输入的内容是否为空，动态拼接sql语句,当只输入用户名时，按照用户名模糊查询,只输入用户邮箱时，按照邮箱精确查询-->
+    <select id="selectByUser" resultMap="userMap">
+       select
+          a.id,
+          a.user_name userName,
+          a.user_password userPassword,
+          a.user_email userEmail,
+          a.user_info userInfo,
+          a.head_img headImg,
+          a.create_time createTime
+          from sys_user a
+          where 1=1
+          <if test="userName!=null and userName!=''">
+              and a.user_name like concat('%',#{userName},'%')
+          </if>
+          <if test="userEmail!=null and userEmail!=''">
+              and a.user_email=#{userEmail}
+          </if>
+    </select>
+
     <!--insert方法-->
     <insert id="insert">
         insert into sys_user(
@@ -45,4 +74,23 @@
         #{id},#{userName},#{userPassword},#{userEmail},#{userInfo},#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
         )
     </insert>
+
+    <insert id="insert1" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_user(
+        user_name,user_password,user_email,user_info,head_img,create_time
+        )values (
+        #{userName},#{userPassword},#{userEmail},#{userInfo},#{headImg,jdbcType=BLOB},#{createTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <update id="updateById">
+        update sys_user
+        set user_name=#{userName},
+        user_password=#{userPassword},
+        user_email=#{userEmail},
+        user_info=#{userInfo},
+        head_img=#{headImg},
+        create_time=#{createTime,jdbcType=TIMESTAMP}
+        where id=#{id}
+    </update>
 </mapper>
