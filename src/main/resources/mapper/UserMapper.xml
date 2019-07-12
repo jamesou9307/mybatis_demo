@@ -93,4 +93,99 @@
         create_time=#{createTime,jdbcType=TIMESTAMP}
         where id=#{id}
     </update>
+
+    <!--动态update语句拼接，null或为空则不更新该列-->
+    <update id="updateByIdSelective">
+        update sys_user
+        set
+        <if test="userName!=null and userName!=''">
+            user_name=#{userName},
+        </if>
+        <if test="userPassword!=null and userPassword!=''">
+            user_password=#{userPassword},
+        </if>
+        <if test="userEmail!=null and userEmail!=''">
+            user_email=#{userEmail},
+        </if>
+        <if test="userInfo!=null and userInfo!=''">
+            user_info=#{userInfo},
+        </if>
+        <if test="headImg!=null">
+            head_img=#{headImg,jdbcType=BLOB},
+        </if>
+        <if test="createTime!=null">
+            create_time=#{createTime,jdbcType=TIMESTAMP},
+        </if>
+        id=#{id}
+        where id=#{id}
+    </update>
+
+    <!--动态拼接insert语句，第一个括号内有一个if，就需要在values括号内添加一个对应-->
+    <insert id="insertSelective">
+        insert into sys_user(
+        <if test="userName!=null and userName!=''">
+            user_name,
+        </if>
+        <if test="userPassword!=null and userPassword!=''">
+            user_password,
+        </if>
+        <if test="userInfo!=null and userInfo!=''">
+            user_info,
+        </if>
+        <if test="userEmail!=null and userEmail!=''">
+            user_email,
+        </if>
+        <if test="headImg!=null">
+            head_img,
+        </if>
+        <if test="createTime!=null">
+            create_time,
+        </if>
+        )values(
+        <if test="userName!=null and userName!=''">
+            #{userName},
+        </if>
+        <if test="userPassword!=null and userPassword!=''">
+            #{userPassword},
+        </if>
+        <if test="userInfo!=null and userInfo!=''">
+            #{userInfo},
+        </if>
+        <if test="userEmail!=null and userEmail!=''">
+            user_email,
+        </if>
+        <if test="headImg!=null">
+            #{headImg,jdbcType=BLOB},
+        </if>
+        <if test="createTime!=null">
+            #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        )
+    </insert>
+
+    <!--choose标签使用-->
+    <select id="selectByIdOrUserName" resultMap="userMap">
+        select
+          a.id,
+          a.user_name ,
+          a.user_password ,
+          a.user_email ,
+          a.user_info ,
+          a.head_img ,
+          a.create_time
+          from sys_user a
+          where
+        <choose>
+            <when test="id!=null and id!=''">
+                id=#{id}
+            </when>
+            <when test="userName!=null and id!=''">
+                user_name=#{userName}
+            </when>
+            <otherwise>
+                1=2
+            </otherwise>
+        </choose>
+
+    </select>
 </mapper>

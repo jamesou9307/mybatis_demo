@@ -24,6 +24,15 @@ public interface UserMapper {
     /*多个接口参数查询时，可以使用param注解*/
     List<SysRole> selectRoleByUserIdAndEnabled(@Param("userId") long userId,@Param("enabled")Integer enabled);
 
-    /*动态拼接sql语句测试*/
+    /*动态拼接select语句*/
     List<SysUser> selectByUser(SysUser sysUser);
+
+    /*动态拼接update语句测试*/
+    int updateByIdSelective(SysUser sysUser);
+
+    /*动态拼接insert语句*/
+    int insertSelective(SysUser sysUser);
+
+    /*根据用户id或者用户名查询，假设用户名是唯一的*/
+    SysUser selectByIdOrUserName(SysUser sysUser);
 }
