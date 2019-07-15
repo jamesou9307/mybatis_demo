@@ -47,7 +47,7 @@
     </select>
 
     <!--动态sql语句，根据输入的内容是否为空，动态拼接sql语句,当只输入用户名时，按照用户名模糊查询,只输入用户邮箱时，按照邮箱精确查询-->
-    <select id="selectByUser" resultMap="userMap">
+    <select id="selectByUser" resultMap="userMap" databaseId="mysql">
        select
           a.id,
           a.user_name userName,
@@ -64,6 +64,26 @@
           <if test="userEmail!=null and userEmail!=''">
               and a.user_email=#{userEmail}
           </if>
+    </select>
+
+    <!--如果数据库为oracle的时候执行的selectByUser语句-->
+    <select id="selectByUser" resultMap="userMap" databaseId="oracle">
+        select
+        a.id,
+        a.user_name userName,
+        a.user_password userPassword,
+        a.user_email userEmail,
+        a.user_info userInfo,
+        a.head_img headImg,
+        a.create_time createTime
+        from sys_user a
+        where 1=1
+        <if test="userName!=null and userName!=''">
+            and a.user_name like '%'||#{userName}||'%'
+        </if>
+        <if test="userEmail!=null and userEmail!=''">
+            and a.user_email=#{userEmail}
+        </if>
     </select>
 
     <!--insert方法-->
@@ -93,4 +113,23 @@
         create_time=#{createTime,jdbcType=TIMESTAMP}
         where id=#{id}
     </update>
+
+    <!--foreach标签的使用，可以实现in子查询-->
+    <select id="selectByList" resultMap="userMap">
+               select
+          a.id,
+          a.user_name userName,
+          a.user_password userPassword,
+          a.user_email userEmail,
+          a.user_info userInfo,
+          a.head_img headImg,
+          a.create_time createTime
+          from sys_user a
+          where
+          a.id in
+        <foreach collection="list" open="(" close=")" separator="," item="id" index="i">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

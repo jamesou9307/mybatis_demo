@@ -26,4 +26,7 @@ public interface UserMapper {
 
     /*动态拼接sql语句测试*/
     List<SysUser> selectByUser(SysUser sysUser);
+
+    /*动态sql,foreach标签的实现使用*/
+    List<SysUser> selectByList(List<Long> idList);
 }

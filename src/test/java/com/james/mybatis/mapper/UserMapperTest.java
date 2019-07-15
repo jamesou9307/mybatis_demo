@@ -15,6 +15,7 @@ import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.management.OperatingSystemMXBean;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -223,6 +224,28 @@ public class UserMapperTest extends BaseMapperTest {
             sqlSession.rollback();
             sqlSession.close();
        }
+
+    }
+
+    @Test
+    public void testSelectByList(){
+
+        SqlSession sqlSession=getSqlSession();
+
+        try{
+
+            List<Long> idList=new ArrayList<Long>();
+            idList.add(1l);
+            idList.add(1001l);
+
+            UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+            List<SysUser> sysUserList=userMapper.selectByList(idList);
+
+            Assert.assertTrue(sysUserList.size()>=2);
+
+        }finally {
+            sqlSession.close();
+        }
 
     }
 
