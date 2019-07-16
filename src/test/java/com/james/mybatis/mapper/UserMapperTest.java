@@ -15,6 +15,7 @@ import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.management.OperatingSystemMXBean;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -227,67 +228,25 @@ public class UserMapperTest extends BaseMapperTest {
     }
 
     @Test
-    public void testUpdateByIdSelective(){
+    public void testSelectByList(){
+
         SqlSession sqlSession=getSqlSession();
 
         try{
-            UserMapper userMapper= sqlSession.getMapper(UserMapper.class);
 
-            SysUser sysUser=new SysUser();
-            sysUser.setId(1l);
-            sysUser.setUserEmail("mybatis_01@tk");
-            sysUser.setUserName("admin_01");
+            List<Long> idList=new ArrayList<Long>();
+            idList.add(1l);
+            idList.add(1001l);
 
-            int result=userMapper.updateByIdSelective(sysUser);
-
-            //只更新了一条数据
-            Assert.assertTrue(result>=1);
-
-            //根据id查找记录
-            SysUser target=userMapper.selectById(1l);
-
-            Assert.assertEquals("mybatis_01@tk",target.getUserEmail());
-            Assert.assertEquals("admin_01",target.getUserName());
-
-        }finally {
-            sqlSession.rollback();
-            sqlSession.close();
-        }
-
-    }
-
-    @Test
-    public void testInsertSelective(){
-
-        SqlSession sqlSession=getSqlSession();
-
-        try {
             UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
-            SysUser sysUser=new SysUser();
-            int result=userMapper.insertSelective(sysUser);
-            //测试插入结果
-            Assert.assertEquals(1,result);
-        }finally {
-            sqlSession.rollback();
-            sqlSession.close();
-        }
+            List<SysUser> sysUserList=userMapper.selectByList(idList);
 
-    }
-
-    @Test
-    public void testSelectByIdOrUserName(){
-        SqlSession sqlSession=getSqlSession();
-        try{
-            UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
-            SysUser sysUser=new SysUser();
-            sysUser.setId(1l);
-            SysUser target=userMapper.selectByIdOrUserName(sysUser);
-
-            Assert.assertNotNull(target);
+            Assert.assertTrue(sysUserList.size()>=2);
 
         }finally {
             sqlSession.close();
         }
+
     }
 
     private void printUserList(List<SysUser> sysUserList){
