@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--数据库驱动-->
+    <classPathEntry location="E:\maven-repository\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" />
+    <context id="mysql" targetRuntime="Mybatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/world?serverTimezone=UTC" userId="root" password="root">
+        </jdbcConnection>
+        <javaTypeResovler>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResovler>
+
+        <!--生成实体类的位置的配置-->
+        <javaModelGenerator targetPackage="com.james.mybatis.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>
+
+        <!--生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="com.james.mybatis.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!--生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.james.mybatis.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--要生成的表 tableName是数据库中的表或者视图名 domainObjectName是实体类名-->
+        <table tableName="country" domainObjectName="Country" enableCountByExample="flase" enableUpdateByExample="false"
+        enableSelectByExample="false" selectByExampleQueryId="false"/>
+    </context>
+
+
+</generatorConfiguration>
