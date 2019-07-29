@@ -18,6 +18,8 @@ public class SysUser {
 
     private Date createTime;//创建日期
 
+    private SysRole sysRole;//一个用户拥有的角色,暂时认为用户和角色之间为一对一关系
+
     public SysUser() {
     }
 
@@ -75,5 +77,13 @@ public class SysUser {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public SysRole getSysRole() {
+        return sysRole;
+    }
+
+    public void setSysRole(SysRole sysRole) {
+        this.sysRole = sysRole;
     }
 }

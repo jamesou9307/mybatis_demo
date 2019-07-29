@@ -29,4 +29,14 @@ public interface UserMapper {
 
     /*动态sql,foreach标签的实现使用*/
     List<SysUser> selectByList(List<Long> idList);
+
+    /*mybatis 一对一高级查询 假设用户和角色的关系一一对应*/
+    SysUser selectUserAndRoleById(Long id);
+
+    /*mybatis 一对一高级查询 假设用户和角色的关系一一对应,使用resultMap实现*/
+    SysUser selectUserAndRoleById2(Long id);
+
+    /*mybatis 一对一高级查询 假设用户和角色的关系一一对应,使用resultMap 的association嵌套查询实现*/
+    SysUser selectUserAndRoleById3(Long id);
+
 }

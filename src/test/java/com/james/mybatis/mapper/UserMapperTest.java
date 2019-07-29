@@ -249,6 +249,60 @@ public class UserMapperTest extends BaseMapperTest {
 
     }
 
+    @Test
+    public void testSelectUserAndRoleById(){
+
+        SqlSession sqlSession=getSqlSession();
+        try{
+
+            UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+            SysUser sysUser=userMapper.selectUserAndRoleById(1001L);
+
+            Assert.assertNotNull(sysUser.getSysRole());
+
+
+        }finally {
+            sqlSession.close();
+        }
+
+    }
+
+    @Test
+    public void testSelectUserAndRoleById2(){
+        SqlSession sqlSession=getSqlSession();
+        try{
+
+            UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+            SysUser sysUser=userMapper.selectUserAndRoleById2(1001L);
+
+            Assert.assertEquals("普通用户",sysUser.getSysRole().getRoleName());
+
+        }finally {
+            sqlSession.close();
+        }
+
+    }
+
+    @Test
+    public void testSelectUserAndRoleById3(){
+        SqlSession sqlSession=getSqlSession();
+        try{
+
+            UserMapper userMapper=sqlSession.getMapper(UserMapper.class);
+            SysUser sysUser=userMapper.selectUserAndRoleById3(1001L);
+
+            //sysUser不为空
+            Assert.assertNotNull(sysUser);
+
+            //sysUser的sysRole也不为空
+            Assert.assertNotNull(sysUser.getSysRole());
+
+        }finally {
+            sqlSession.close();
+        }
+
+    }
+
     private void printUserList(List<SysUser> sysUserList){
         for(SysUser sysUser:sysUserList){
             System.out.println(
